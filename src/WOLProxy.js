@@ -7,6 +7,19 @@ class WOLProxy {
 
     constructor() {
         this._WOLSentDate = null;
+        this._wakeUpTimeout = 60000;
+    }
+
+    /**
+     * Wake up timeout for target machine.
+     * If machine won't start within given period of time then WOL signal will be send again.
+     *
+     * @param {number} timeout in milliseconds
+     * @returns {WOLProxy}
+     */
+    wakeUpTimeout(timeout) {
+        this._wakeUpTimeout = 60000;
+        return this;
     }
 
     /**
@@ -15,7 +28,11 @@ class WOLProxy {
      * @param {string} [sourceDefinition.interface='0.0.0.0']
      */
     source(sourceDefinition) {
-        this.source = sourceDefinition;
+        if (typeof sourceDefinition === 'number' || typeof sourceDefinition === 'string') {
+            this.source = {port: sourceDefinition};
+        } else {
+            this.source = sourceDefinition;
+        }
         return this;
     }
 
@@ -147,7 +164,7 @@ class WOLProxy {
     }
 
     get hasWOLBeenSent() {
-        return this._WOLSentDate && (Date.now() - this._WOLSentDate.getTime()) < 600000;
+        return this._WOLSentDate && (Date.now() - this._WOLSentDate.getTime()) < this._wakeUpTimeout;
     }
 }
 

@@ -17,7 +17,7 @@ const WOLProxy = require('wake-on-lan-proxy');
     .run();
 ```
 
-## Debug
+## Debugging
 ```js
 DEBUG=* node script.js
 ```
