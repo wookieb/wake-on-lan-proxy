@@ -91,6 +91,10 @@ class WOLProxy {
                 targetSocket.destroy();
                 connection.destroy();
             });
+
+            connection.on('error', (error) => {
+                debug('Connection error', error);
+            });
         });
         this.server.listen(this.source.port, this.source.interface);
     }
@@ -128,6 +132,7 @@ class WOLProxy {
                     break;
             }
         });
+
         return targetSocket;
     }
 
