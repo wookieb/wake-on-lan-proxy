@@ -12,7 +12,7 @@ const WOLProxy = require('wake-on-lan-proxy');
     .target({
         port: 80,
         host: '192.168.0.10',
-        mac: '<address mac of target machine>'
+        MAC: '<address mac of target machine>'
     })
     .run();
 ```
